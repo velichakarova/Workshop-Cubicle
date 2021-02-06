@@ -1,0 +1,25 @@
+{
+  "name": "workshop-cubicle",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "description": "\"Cubicle\" is a place, where you can browse some of the most popular rubik cubes in the world and add some new cubes that you have discovered.",
+  "main": "index.js",
+  "scripts": {
+    "start": "SET NODE_ENV=development && nodemon ./index.js",
+    "prod": "SET NODE_ENV=production && node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/velichakarova/Workshop-Cubicle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/velichakarova/Workshop-Cubicle/issues"
+  },
+  "homepage": "https://github.com/velichakarova/Workshop-Cubicle#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0"
+  }
+}

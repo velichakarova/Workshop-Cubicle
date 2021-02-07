@@ -4,9 +4,21 @@ const fs = require('fs/promises');
 const path = require('path')
 
 let productData = require('../config/products.json');
+const { search } = require('../controllers/productController');
 
-function getAll(){
-    return productData;
+function getAll(query){
+    let result = productData;
+    if(query.search){
+      result = result.filter(x => x.name.toLowerCase().includes(query.search))  
+    }
+    if(query.from){
+        result = result.filter(x => Number(x.level) >=query.from)
+    }
+    if(query.to){
+        result = result.filter(x => Number(x.level) <= query.to)
+    }
+
+    return result;
 }
 function getOne(id){
     return productData.find(x=>x.id == id)

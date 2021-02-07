@@ -8,6 +8,9 @@ function setupExpress(app){
     }));
     app.set('view engine', 'hbs');
     app.use(express.static(`static`));
+     app.use(express.urlencoded({
+         extended:true
+     }))
 }
 
 module.exports= setupExpress;

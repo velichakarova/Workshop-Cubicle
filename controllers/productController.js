@@ -9,7 +9,11 @@ router.get('/', (req,res)=> {
 router.get('/create', (req,res)=> {
     res.render('create',{title:'Create'})
 });
+router.post('/create', (req,res)=> {
+   console.log(req.body);
 
+   res.redirect('/products');
+});
 router.get('/details/:productId', (req, res)=>{
     console.log(req.params.productId);
     res.render('details',{title:'Porduct Deteils'})

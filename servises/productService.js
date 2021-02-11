@@ -1,40 +1,34 @@
 const Cube = require('../models/Cube');
-const uniqid = require('uniqid');
+
 const productData = require('../data/productData')
 
-const { search } = require('../controllers/productController');
-
 function getAll(query){
-    let result = productData.getAll();
+    //let products = productData.getAll()
+    let products = Cube.find();
+
     if(query.search){
-      result = result.filter(x => x.name.toLowerCase().includes(query.search))  
+      products = products.filter(x => x.name.toLowerCase().includes(query.search))  
     }
     if(query.from){
-        result = result.filter(x => Number(x.level) >=query.from)
+        products = products.filter(x => Number(x.level) >= query.from)
     }
     if(query.to){
-        result = result.filter(x => Number(x.level) <= query.to)
+        products = products.filter(x => Number(x.level) <= query.to)
     }
 
-    return result;
+    return products;
 }
 function getOne(id){
-    return productData.getOne(id)
+    return  productsDb.find(x=> x.id == id)
+    // return Cube.getOne(id)
 }
 
 function create(data){
-
-    let cube = new Cube(
-        uniqid(),
-        data.name,
-        data.description,
-        data.imageUrl,
-        data.difficultyLevel
-       );
-
-   
-
-       return productData.create(cube)
+   console.log(data);
+    let cube = new Cube(data);
+       // return productData.create(cube)
+       console.log(cube);
+       return cube.save()
            
 }
 module.exports = {

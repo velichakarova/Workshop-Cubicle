@@ -2,9 +2,11 @@ const express = require('express');
 
 const config = require('./config/config.js');
 const expressConfig = require('./config/express');
-const routes = require('./routes')
+const routes = require('./routes');
+
 const app = express();
 
+require('./config/mondoose')(app);
 expressConfig(app);
 app.use(routes);
 

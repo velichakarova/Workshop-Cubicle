@@ -6,8 +6,12 @@ const router = Router();
 
 router.get('/', (req,res)=> {
     //console.log(req.query);
-    let products = productService.getAll(req.query);
-    res.render('home',{title:'Browse', products})
+    let products = productService.getAll(req.query)
+        .then(products =>{
+            res.render('home',{title:'Browse', products})
+        })
+        .catch(() => res.status(500).end())
+    
 });
 
 router.get('/create', (req,res)=> {
@@ -20,9 +24,12 @@ router.post('/create',validateProduct, (req,res)=> {
    .catch(() => res.status(500).end())
 });
 router.get('/details/:productId', (req, res)=>{
-    console.log(req.params.productId);
+    //console.log(req.params.productId);
     let product = productService.getOne(req.params.productId)
-    res.render('details',{title:'Porduct Deteils', product})
+    .then(product=>{
+        res.render('details',{title:'Porduct Deteils', product})
+    })
+    .catch(() => res.status(500).end())
 });
 
 

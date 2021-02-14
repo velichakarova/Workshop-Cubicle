@@ -26,4 +26,4 @@ const acssesorySchema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('Acssesoary', acssesorySchema );
+module.exports = mongoose.model('Accessory', acssesorySchema );

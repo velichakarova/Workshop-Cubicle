@@ -5,7 +5,7 @@ const Accessoary = require('../models/Accessory')
 async function getAll(query){
     
     let products = await Cube.find({}).lean();
-    console.log(products);
+    //console.log(products);
 
     if(query.search){
       products = products.filter(x => x.name.toLowerCase().includes(query.search))  

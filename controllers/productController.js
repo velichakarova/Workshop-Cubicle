@@ -3,6 +3,9 @@ const productService = require('../servises/productService');
 const accessoryService = require('../servises/accessoryServece');
 const validateProduct =require('./helpers/productHelper')
 
+const isAuth = require ('../middlewere/isAuth');
+const isGuest = require ('../middlewere/isGuest')
+
 const router = Router();
 
 router.get('/', (req,res)=> {
@@ -15,10 +18,10 @@ router.get('/', (req,res)=> {
     
 });
 
-router.get('/create', (req,res)=> {
+router.get('/create',isAuth, (req,res)=> {
     res.render('create',{title:'Create'})
 });
-router.post('/create',validateProduct, (req,res)=> {
+router.post('/create',isAuth, validateProduct, (req,res)=> {
 
    productService.create(req.body)
    .then(() => res.redirect('/products'))
@@ -34,13 +37,13 @@ router.get('/details/:productId', (req, res)=>{
     .catch(() => res.status(500).end())
     
 });
-router.get('/:productId/attach', async(req,res)=>{
+router.get('/:productId/attach',isAuth, async(req,res)=>{
     let product = await productService.getOne(req.params.productId)
     console.log(product);
     let accessories = await accessoryService.getAllWithout(product.accessories);
     res.render('attachAccessory',{title:'Attach Accessoary', product, accessories})
 });
-router.post('/:productId/attach', (req,res)=>{
+router.post('/:productId/attach',isAuth, (req,res)=>{
     productService.attachAccessory(req.params.productId, req.body.accessory)
     .then(() =>res.redirect(`/products/details/${req.params.productId}`))
 

@@ -15,11 +15,11 @@ router.post('/login',isGuest, async(req,res)=>{
 const {username, password} = req.body;
 try {
     let token = await authService.login({username, password})
-    //console.log(token);
+    console.log(token);
     res.cookie(COOKIE_NAME , token)
     res.redirect('/products')
 } catch (error) {
-    //console.log(error);
+    console.log(error);
     res.render('login' , {error})
 }
 
@@ -31,7 +31,6 @@ router.post('/register',isGuest, async(req,res)=>{
        // console.log(req.body);
     try {
         let user = await authService.register(req.body);
-        console.log(token);
         res.redirect('/auth/login')
         
     } catch (error) {

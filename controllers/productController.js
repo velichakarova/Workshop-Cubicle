@@ -23,7 +23,7 @@ router.get('/create',isAuth, (req,res)=> {
 });
 router.post('/create',isAuth, validateProduct, (req,res)=> {
 
-   productService.create(req.body)
+   productService.create(req.body, req.user._id)
    .then(() => res.redirect('/products'))
    .catch(() => res.status(500).end())
 });  
@@ -47,6 +47,37 @@ router.post('/:productId/attach',isAuth, (req,res)=>{
     productService.attachAccessory(req.params.productId, req.body.accessory)
     .then(() =>res.redirect(`/products/details/${req.params.productId}`))
 
+})
+router.get('/:productId/edit',isAuth, (req,res)=>{
+    productService.getOne(req.params.productId)
+    .then(product=>{
+        res.render('editCube', product)
+    })
+})
+router.post('/:productId/edit',isAuth,validateProduct, (req,res)=>{
+    productService.updateOne(req.params.productId, req.body)
+    .then(response =>{
+        res.redirect(`/products/details/${req.params.productId}`)
+    })
+    .catch(error=>{
+
+    })
+})
+router.get('/:productId/delete',isAuth, (req,res)=>{
+    productService.getOne(req.params.productId)
+    
+    .then(product=>{
+        if(req.user._id != product.creator){
+            res.redirect('/products')
+        }else{
+            res.render('deleteCube', product)
+        }
+        
+    })
+})
+router.post('/:productId/delete',isAuth, (req,res)=>{
+  productService.deleteOne(req.params.productId)
+  .then(response =>res.redirect('/products'))
 })
 
 

@@ -5,11 +5,12 @@ const { SALT_ROUND, SECRET} = require('../config/config');
 
 
 
-const register = async ({username,password,repeatPassword})=>{
+const register = async ({username, password, repeatPassword})=>{
     if(password !== repeatPassword){
         throw{ message: 'The password it dosn\'t much!'}
     }
-      let userName = await User.findOne({username})
+
+    let userName = await User.findOne({username})
      if(userName){
         throw{message:'User already excist!'}
     }
@@ -24,7 +25,6 @@ const register = async ({username,password,repeatPassword})=>{
 
 const login = async ({username, password})=>{
 
-    //User.find({}).where(username).equals(username)
     let user = await User.findOne({username})
 
     if(!user){
@@ -35,7 +35,7 @@ const login = async ({username, password})=>{
 
     if(!isMatch) {throw { message: 'Wrong password!'}}
 
-    let token = jwt.sign({_id: user._id, username:user.username} ,SECRET)
+    let token = jwt.sign({_id: user._id, username: user.username} ,SECRET)
 
     return token;
 }

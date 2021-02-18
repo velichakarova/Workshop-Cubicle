@@ -27,8 +27,8 @@ function getOneWhitAccessories(id){
     return Cube.findById(id).populate('accessories').lean(); 
 }
 
-function create(data){
-    let cube = new Cube(data);
+function create(data, userId){
+    let cube = new Cube({...data, creator: userId});
        return cube.save();
            
 }
@@ -40,10 +40,20 @@ function create(data){
             return product.save();
     }
 
+   function updateOne(productId,productData){
+    return Cube.updateOne({_id:productId}, productData)
+   }
+   function deleteOne(productId){
+   return Cube.deleteOne({_id :productId})
+   }
+
+
 module.exports = {
     create,
     getAll,
     getOne,
     attachAccessory,
-    getOneWhitAccessories
+    getOneWhitAccessories,
+    updateOne,
+    deleteOne,
 }
